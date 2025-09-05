@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
@@ -18,7 +17,6 @@ from homeassistant.const import (
     UnitOfVolumeFlowRate,
     UnitOfMass,
     UnitOfTime,
-    PERCENTAGE
 )
 
 from .const import (
@@ -29,7 +27,6 @@ from .const import (
     WATER_USAGE_TODAY,
     WATER_USAGE_DAILY_AVERAGE,
     CURRENT_WATER_FLOW,
-    SALT_LEVEL_PERCENTAGE,
     OUT_OF_SALT_ON,
     DAYS_UNTIL_OUT_OF_SALT,
     SALT_TYPE,
@@ -79,13 +76,6 @@ SENSOR_TYPES: tuple[EcowaterSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.VOLUME_FLOW_RATE,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfVolumeFlowRate.GALLONS_PER_MINUTE
-    ),
-    EcowaterSensorEntityDescription(
-        key=SALT_LEVEL_PERCENTAGE,
-        name="Salt Level Percentage",
-        icon="mdi:altimeter",
-        state_class=SensorStateClass.MEASUREMENT,
-        native_unit_of_measurement=PERCENTAGE
     ),
     EcowaterSensorEntityDescription(
         key=OUT_OF_SALT_ON,
