@@ -1,0 +1,80 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "username": "Nazwa użytkownika",
+          "password": "Hasło",
+          "dateformat": "Format daty"
+        },
+        "description": "Podaj swoje dane logowania Ecowater, a następnie wybierz format daty jaki jest używany przez Twoje urządzenie.",
+        "title": "Logowanie"
+      },
+      "device": {
+        "data": {
+          "device_serial_number": "Nr seryjny"
+        },
+        "description": "Wybierz urządzenie Ecowater które chesz dodać",
+        "title": "Urządzenia"
+      }
+    },
+    "error": {
+      "login_fail": "Nieudane logowanie. Sprawdź ponownie swoją nazwę użytkownika i hasło."
+    },
+    "abort": {
+      "no_available_devices": "Brak dostępnych urządzeń."
+    }
+  },
+  "entity": {
+    "sensor": {      
+      "water_available": {
+        "name": "Dostępna woda"
+      },
+      "water_usage_today": {
+        "name": "Woda zużyta dzisiaj"
+      },
+      "water_usage_daily_average": {
+        "name": "Średnie zużycie wody na dzień"
+      },
+      "current_water_flow": {
+        "name": "Przepływ wody"
+      },
+      "salt_level_percentage": {
+        "name": "Salt Level Percentage"
+      },
+      "out_of_salt_on": {
+        "name": "Data skończenia się soli"
+      },
+      "days_until_out_of_salt": {
+        "name": "Dni zanim skończy się sól"
+      },
+      "salt_type": {
+        "name": "Rodzaj soli"
+      },
+      "last_recharge_date": {
+        "name": "Ostatnia regeneracja"
+      },
+      "days_since_recharge": {
+        "name": "Dni od ostatniej regeneracji"
+      },
+      "recharge_enabled": {
+        "name": "Regeneracja włączona"
+      },
+      "recharge_status": {
+        "name": "Status regeneracji"
+      },
+      "rock_removed": {
+        "name": "Ilość usuniętych minerałów"
+      },
+      "rock_removed_daily_average": {
+        "name": "Średnia ilość usuniętych minerałów na dzień"
+      },
+      "last_api_call_successful": {
+        "name": "Ostatnia aktualizacja"
+      },
+      "status": {
+        "name": "Status"
+      }
+    }
+  }
+}
