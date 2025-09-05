@@ -1,5 +1,9 @@
 from dataclasses import dataclass
 
+import logging
+
+
+from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
@@ -35,10 +39,14 @@ from .const import (
     RECHARGE_ENABLED,
     RECHARGE_STATUS,
     ROCK_REMOVED,
-    ROCK_REMOVED_DAILY_AVERAGE
+    ROCK_REMOVED_DAILY_AVERAGE,
+    LAST_API_CALL_SUCCESSFUL,
+    STATUS
 )
 
 from .coordinator import EcowaterDataCoordinator
+
+_LOGGER = logging.getLogger(__name__)
 
 @dataclass
 class EcowaterSensorEntityDescription(SensorEntityDescription):
@@ -47,7 +55,7 @@ class EcowaterSensorEntityDescription(SensorEntityDescription):
 SENSOR_TYPES: tuple[EcowaterSensorEntityDescription, ...] = (
     EcowaterSensorEntityDescription(
         key=WATER_AVAILABLE,
-        name="Water Available",
+        translation_key="water_available",
         icon="mdi:water",
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL,
@@ -55,7 +63,7 @@ SENSOR_TYPES: tuple[EcowaterSensorEntityDescription, ...] = (
     ),
     EcowaterSensorEntityDescription(
         key=WATER_USAGE_TODAY,
-        name="Water Used Today",
+        translation_key="water_usage_today",
         icon="mdi:water",
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
@@ -63,7 +71,7 @@ SENSOR_TYPES: tuple[EcowaterSensorEntityDescription, ...] = (
     ),
     EcowaterSensorEntityDescription(
         key=WATER_USAGE_DAILY_AVERAGE,
-        name="Average Water Used per Day",
+        translation_key="water_usage_daily_average",
         icon="mdi:water",
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL,
@@ -71,7 +79,7 @@ SENSOR_TYPES: tuple[EcowaterSensorEntityDescription, ...] = (
     ),
     EcowaterSensorEntityDescription(
         key=CURRENT_WATER_FLOW,
-        name="Water Flow",
+        translation_key="current_water_flow",
         icon="mdi:water",
         device_class=SensorDeviceClass.VOLUME_FLOW_RATE,
         state_class=SensorStateClass.MEASUREMENT,
@@ -79,46 +87,46 @@ SENSOR_TYPES: tuple[EcowaterSensorEntityDescription, ...] = (
     ),
     EcowaterSensorEntityDescription(
         key=OUT_OF_SALT_ON,
-        name="Out of Salt Date",
+        translation_key="out_of_salt_on",
         icon="mdi:calendar",
         device_class=SensorDeviceClass.DATE
     ),
     EcowaterSensorEntityDescription(
         key=DAYS_UNTIL_OUT_OF_SALT,
-        name="Days Until Out of Salt",
+        translation_key="days_until_out_of_salt",
         icon="mdi:calendar",
         native_unit_of_measurement=UnitOfTime.DAYS
     ),
     EcowaterSensorEntityDescription(
         key=SALT_TYPE,
-        name="Salt Type",
+        translation_key="salt_type",
         icon="mdi:shaker-outline"
     ),
     EcowaterSensorEntityDescription(
         key=LAST_RECHARGE,
-        name="Last Recharge Date",
+        translation_key="last_recharge_date",
         icon="mdi:calendar",
         device_class=SensorDeviceClass.DATE
     ),
     EcowaterSensorEntityDescription(
         key=DAYS_SINCE_RECHARGE,
-        name="Days Since Last Recharge",
+        translation_key="days_since_recharge",
         icon="mdi:calendar",
         native_unit_of_measurement=UnitOfTime.DAYS
     ),
     EcowaterSensorEntityDescription(
         key=RECHARGE_ENABLED,
-        name="Recharge Enabled",
+        translation_key="recharge_enabled",
         icon="mdi:refresh"
     ),
     EcowaterSensorEntityDescription(
         key=RECHARGE_STATUS,
-        name="Recharge Status",
+        translation_key="recharge_status",
         icon="mdi:refresh"
     ),
     EcowaterSensorEntityDescription(
         key=ROCK_REMOVED,
-        name="Rock Removed",
+        translation_key="rock_removed",
         icon="mdi:grain",
         device_class=SensorDeviceClass.WEIGHT,
         state_class=SensorStateClass.TOTAL,
@@ -126,12 +134,23 @@ SENSOR_TYPES: tuple[EcowaterSensorEntityDescription, ...] = (
     ),
     EcowaterSensorEntityDescription(
         key=ROCK_REMOVED_DAILY_AVERAGE,
-        name="Average Rock Removed per Day",
+        translation_key="rock_removed_daily_average",
         icon="mdi:grain",
         device_class=SensorDeviceClass.WEIGHT,
         state_class=SensorStateClass.TOTAL,
         native_unit_of_measurement=UnitOfMass.POUNDS
     ),
+    EcowaterSensorEntityDescription(
+        key=LAST_API_CALL_SUCCESSFUL,
+        translation_key="last_api_call_successful",
+        icon="mdi:calendar-clock",
+        device_class=SensorDeviceClass.TIMESTAMP
+    ),
+    EcowaterSensorEntityDescription(
+        key=STATUS,
+        translation_key="status",
+        icon="mdi:lan-connect"
+    )
 )
 
 async def async_setup_entry(
